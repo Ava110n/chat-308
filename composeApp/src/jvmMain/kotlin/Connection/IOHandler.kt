@@ -1,20 +1,24 @@
 package Connection
 
+import java.io.BufferedReader
+import java.io.BufferedWriter
 import java.net.Socket
 
-class IOHandler {
-    val client = Socket("127.0.0.1", 1337)
+class IOHandler(socket: Socket) {
+    private val reader: BufferedReader = socket.getInputStream().bufferedReader()
+    private val writer: BufferedWriter = socket.getOutputStream().bufferedWriter()
 
-    fun write(message: String) {
-
-        client.outputStream.write(message.toByteArray())
-
-    }
-    fun read() {
-
-        client.getInputStream().read("Hello!".toByteArray())
+    fun write(message: Message) {
+            writer.write(message.message)
+            writer.newLine()
+            writer.flush()
 
     }
 
-//    client.close()
+    fun read(): String? {
+            val line = reader.readLine()
+
+
+            return line
+    }
 }

@@ -1,6 +1,7 @@
-package Client
+package org.example.project.Client
 
 import Connection.IOHandler
+import Connection.Message
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,17 +20,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.mutableStateListOf
-
+import java.net.Socket
 
 
 @Composable
 @Preview
-fun chat() {
+fun chat(socket: Socket) {
     val scrollState = rememberScrollState()
-    val handler = IOHandler()
+    val handler = IOHandler(socket)
 
     var message by remember { mutableStateOf("") }
-    val messages = remember { mutableStateListOf<String>() }
+    val messages = remember { mutableStateListOf<Message>() }
 
     var userName by remember { mutableStateOf("") }
     var isLoggedIn by remember { mutableStateOf(false) }
@@ -60,7 +61,7 @@ fun chat() {
                         Column {
                             Text("Вы вошли как: $userName")
                             for (m in messages) {
-                                Row { Text(m) }
+                                Row { (m.toString()) }
                             }
                         }
                     }
@@ -83,7 +84,11 @@ fun chat() {
                         modifier = Modifier.fillMaxSize(),
                         onClick = {
                             if (message.isNotBlank()) {
-                                handler.write("$userName: $message")
+                                val msg = Message(message,userName)
+                                messages.add(msg)
+
+                                handler.write(msg)
+
                                 message = ""
                             }
                         }

@@ -1,8 +1,7 @@
-package org.example.project
-
-import Client.chat
+import org.example.project.Client.chat
 import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
+import java.net.Socket
 
 
 fun main() = application {
@@ -10,6 +9,7 @@ fun main() = application {
         onCloseRequest = ::exitApplication,
         title = "Chat",
     ) {
-        chat()
+        val socket = Socket("127.0.0.1",1337)
+        chat(socket)
     }
 }

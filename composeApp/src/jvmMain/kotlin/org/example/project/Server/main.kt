@@ -1,4 +1,4 @@
-package Server
+package org.example.project.Server
 
 fun main() {
     val server = Server()

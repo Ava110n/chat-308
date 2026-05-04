@@ -1,6 +1,6 @@
 package org.example.project.Server
 
-fun main() {
+suspend fun main() {
     val server = Server()
     server.start()
 }

@@ -3,10 +3,12 @@ package Connection
 
 class Message {
 
-    constructor(message: String, orig: String = "admin", dest: String = "all") {
+    constructor(message: String,
+                orig: User = User("admin"),
+                dest: User? = null) {
         this.message = message
-        this.dest = dest
         this.orig = orig
+        this.dest = dest
     }
 
     override fun toString(): String {
@@ -15,7 +17,7 @@ class Message {
 
     val message: String
 
-    val orig: String
+    val orig: User
 
-    val dest: String
+    val dest: User?
 }

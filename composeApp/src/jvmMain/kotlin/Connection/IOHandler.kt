@@ -8,6 +8,12 @@ class IOHandler(socket: Socket) {
     private val reader: BufferedReader = socket.getInputStream().bufferedReader()
     private val writer: BufferedWriter = socket.getOutputStream().bufferedWriter()
 
+    fun writeUserName(userName: String) {
+        writer.write(userName)
+        writer.newLine()
+        writer.flush()
+    }
+
     fun write(message: Message) {
             writer.write(message.message)
             writer.newLine()
@@ -17,8 +23,6 @@ class IOHandler(socket: Socket) {
 
     fun read(): String? {
             val line = reader.readLine()
-
-
             return line
     }
 }
